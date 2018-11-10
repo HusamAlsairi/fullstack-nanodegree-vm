@@ -3,7 +3,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 class webserverHandler(BaseHTTPRequestHandler):
-    def do_Get(self):
+    def do_GET(self):
         try:
             if self.path.endswith("/hello"):
                 self.send_response(200)
@@ -12,7 +12,7 @@ class webserverHandler(BaseHTTPRequestHandler):
 
                 output = ""
                 output += "<html><body>Hello!</body></html>"
-                self.wifile.write(output)
+                self.wfile.write(output.encode())
                 print (output)
                 return
         except IOError:
