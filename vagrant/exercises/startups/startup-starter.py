@@ -63,7 +63,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                     output += "<p >%s</p>"%founder.bio
                     output +="<br><br>"
 
-                output += "<form method ='POST' enctype='multipart/form-data' action =''>"
+                output += "<form method ='POST' enctype='multipart/form-data' action ='/startups/%s/details/add'>" % startup_id
                 output += "<input type='text' name='name' placeholder='name'/>"
                 output += "<input type='hidden' name='startup_id' value='%s' />" %startup_id
                 output += "<input type='text' name='bio' placeholder='bio'/>"
@@ -130,7 +130,7 @@ class webServerHandler(BaseHTTPRequestHandler):
         print("Path:", self.path)
         print("is what we want", str(self.path.endswith('/details')))
         try:
-            if self.path.endswith('/details'):
+            if self.path.endswith('/details/add'):
                 ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
                 if ctype == 'multipart/form-data':
                     fields = cgi.parse_multipart(self.rfile, pdict)                    
@@ -217,7 +217,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 
 def main():
     try:
-        port = 5000
+        port = 8000
         server = HTTPServer(('', port), webServerHandler)
         print "Web Server running on port %s" % port
         server.serve_forever()
